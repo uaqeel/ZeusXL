@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C2A761C4-2120-4055-977B-91D828F83E32}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XL</RootNamespace>
+    <AssemblyName>XL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord.MachineLearning">
+      <HintPath>..\Lib\Accord.NET\Accord.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math, Version=2.6.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Accord.NET\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics">
+      <HintPath>..\Lib\Accord.NET\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge">
+      <HintPath>..\Lib\AForge.NET\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math">
+      <HintPath>..\Lib\AForge.NET\AForge.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Bloomberglp.Blpapi">
+      <HintPath>..\Lib\BBG\Bloomberglp.Blpapi.dll</HintPath>
+    </Reference>
+    <Reference Include="CSharpAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\IB-Api.Official\CSharpAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDna.Contrib">
+      <HintPath>..\Lib\ExcelDnaContrib-49966\Distribution\ExcelDna.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDna.Integration, Version=0.27.3880.3369, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ExcelDna-77009\Distribution\ExcelDna.Integration.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Iridium, Version=2008.3.12.405, Culture=neutral, PublicKeyToken=c061a3ec32cc0c6f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Math.Net\MathNet.Iridium.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\Lib\Math.Net\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\Lib\NPOI\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="QLNet">
+      <HintPath>..\Lib\QLNet\QLNet.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet">
+      <HintPath>..\Lib\RDotNet_1.5.12\RDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet.NativeLibrary">
+      <HintPath>..\Lib\RDotNet_1.5.12\RDotNet.NativeLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Reactive">
+      <HintPath>..\Lib\RX\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ObjectDisplayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectDisplayForm.Designer.cs">
+      <DependentUpon>ObjectDisplayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ObjectList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectList.Designer.cs">
+      <DependentUpon>ObjectList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Utils.cs" />
+    <Compile Include="XL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XLBloombergFunctions.cs" />
+    <Compile Include="XLContractFunctions.cs" />
+    <Compile Include="XLContraModusFunctions.cs" />
+    <Compile Include="XLDataFunctions.cs" />
+    <Compile Include="XLDataFunctions2.cs" />
+    <Compile Include="XLDifferentialEvolution.cs" />
+    <Compile Include="XLMathFunctions.cs" />
+    <Compile Include="XLObjectMap.cs" />
+    <Compile Include="XLObjectMap2.cs" />
+    <Compile Include="XLTestFunctions.cs" />
+    <Compile Include="XLUtilFunctions.cs" />
+    <Compile Include="XL_RTD.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\OMKey.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="ZEvalSetup.r" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonTypes\CommonTypes.csproj">
+      <Project>{367A837B-D09D-40B9-8EA3-31037186E376}</Project>
+      <Name>CommonTypes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataSources\DataSources.csproj">
+      <Project>{5d4011c7-4133-47bb-af40-78bfafcaef11}</Project>
+      <Name>DataSources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ObjectDisplayForm.resx">
+      <DependentUpon>ObjectDisplayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectList.resx">
+      <DependentUpon>ObjectList.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir $(SolutionDir)\Addin
+copy $(TargetDir)\* $(SolutionDir)\Addin
+copy $(ProjectDir)\XL.dna $(SolutionDir)\Addin
+copy $(ProjectDir)\ZEvalSetup.r $(SolutionDir)\Addin
+del $(SolutionDir)\Addin\ExcelDna.Integration.dll</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

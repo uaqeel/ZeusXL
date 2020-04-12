@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{367A837B-D09D-40B9-8EA3-31037186E376}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CommonTypes</RootNamespace>
+    <AssemblyName>CommonTypes</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord.Math">
+      <HintPath>..\Lib\Accord.NET\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="CSharpAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\IB-Api.Official\CSharpAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Iridium">
+      <HintPath>..\Lib\Math.Net\MathNet.Iridium.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\Lib\Math.Net\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.480, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ProtoBuf\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="QLNet">
+      <HintPath>..\Lib\QLNet\QLNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Reactive">
+      <HintPath>..\Lib\RX\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bars.cs" />
+    <Compile Include="BasicTypes.cs" />
+    <Compile Include="BrokerUtils\IBClient.cs" />
+    <Compile Include="BrokerUtils\IBUtils.cs" />
+    <Compile Include="Containers\Containers.cs" />
+    <Compile Include="Containers\ContainerUtils.cs" />
+    <Compile Include="Containers\SummaryContainer.cs" />
+    <Compile Include="Contract.cs" />
+    <Compile Include="DataTypes.cs" />
+    <Compile Include="Indicators\Indicator.cs" />
+    <Compile Include="Indicators\KalmanSmoother.cs" />
+    <Compile Include="Indicators\MovingAverages.cs" />
+    <Compile Include="Indicators\PriceIndicator.cs" />
+    <Compile Include="Indicators\Volatility.cs" />
+    <Compile Include="Math\BayesianChangePoints.cs" />
+    <Compile Include="Math\BlackScholes.cs" />
+    <Compile Include="Math\BSpline.cs" />
+    <Compile Include="Math\CorrelationSmoothing.cs" />
+    <Compile Include="Math\DifferentialEvolution.cs" />
+    <Compile Include="Math\EMD.cs" />
+    <Compile Include="Math\KalmanFilter.cs" />
+    <Compile Include="Math\LowNoiseDifferentiators.cs" />
+    <Compile Include="Math\MathUtils.cs" />
+    <Compile Include="Math\OptimalRiskDecomposition.cs" />
+    <Compile Include="Math\PolynomialInterpolator.cs" />
+    <Compile Include="Math\RealisedVariance.cs" />
+    <Compile Include="Math\Regression.cs" />
+    <Compile Include="Math\ScenarioCube.cs" />
+    <Compile Include="Math\SobolRNG.cs" />
+    <Compile Include="MessageBus.cs" />
+    <Compile Include="OrderExecution.cs" />
+    <Compile Include="Market.cs" />
+    <Compile Include="Containers\ObservableContainers.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="PortfolioAllocation\MarketNeutralAllocation.cs" />
+    <Compile Include="PortfolioAllocation\OptimalSharpeAllocation.cs" />
+    <Compile Include="PortfolioAllocation\RiskParityAllocation.cs" />
+    <Compile Include="PositionSizer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategy.cs" />
+    <Compile Include="TimeAndSales.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="VarBars.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

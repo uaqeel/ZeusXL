@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExcelDna", "ExcelDna", "{1F12E14F-CDAF-4968-8DB6-C2E278013B77}"
+	ProjectSection(SolutionItems) = preProject
+		ExcelDna\ExcelDna.dna = ExcelDna\ExcelDna.dna
+		ExcelDna\ExcelDna.Integration.dll = ExcelDna\ExcelDna.Integration.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelDna.Contrib", "ExcelDna.Contrib\ExcelDna.Contrib.csproj", "{82DC40C7-C841-4A02-BE99-680E7B5AB488}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelDna.Contrib.Tests", "ExcelDna.Contrib.Tests\ExcelDna.Contrib.Tests.csproj", "{DEFA90D5-1AF9-4849-BF11-A2F06A83A393}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82DC40C7-C841-4A02-BE99-680E7B5AB488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82DC40C7-C841-4A02-BE99-680E7B5AB488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82DC40C7-C841-4A02-BE99-680E7B5AB488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82DC40C7-C841-4A02-BE99-680E7B5AB488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEFA90D5-1AF9-4849-BF11-A2F06A83A393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEFA90D5-1AF9-4849-BF11-A2F06A83A393}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEFA90D5-1AF9-4849-BF11-A2F06A83A393}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEFA90D5-1AF9-4849-BF11-A2F06A83A393}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+EndGlobal
