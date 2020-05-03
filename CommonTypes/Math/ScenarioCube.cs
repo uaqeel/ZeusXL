@@ -58,7 +58,8 @@ namespace CommonTypes.Maths
             rsg = new RandomSequenceGenerator<MersenneTwisterUniformRng>(nSteps * Processes.Count, new MersenneTwisterUniformRng());
             tg = new TimeGrid(nSteps * dt, nSteps);
 
-            var rsg2 = new InverseCumulativeRsg<RandomSequenceGenerator<MersenneTwisterUniformRng>, InverseCumulativeNormal>(rsg, new InverseCumulativeNormal());
+            var rsg2 = new InverseCumulativeRsg<RandomSequenceGenerator<MersenneTwisterUniformRng>,
+                            InverseCumulativeNormal>(rsg, new InverseCumulativeNormal());
 
             mpg = new MultiPathGenerator<InverseCumulativeRsg<RandomSequenceGenerator<MersenneTwisterUniformRng>, InverseCumulativeNormal>>(spa, tg, rsg2, false);
         }
@@ -68,12 +69,13 @@ namespace CommonTypes.Maths
         {
             double[,] ret = new double[nSteps, nAssets + 1];
             
-            Sample<MultiPath> mp = mpg.next();
+            Sample<IPath> ip = mpg.next();
+            MultiPath mp = ip.value as MultiPath;
             for (int i = 0; i < nSteps; ++i)
             {
                 for (int j = 0; j < nAssets; ++j)
                 {
-                    ret[i, j] = mp.value[j][i];
+                    ret[i, j] = mp[j][i];
                 }
 
                 ret[i, nAssets] = yc.currentLink().discount(i * dt);

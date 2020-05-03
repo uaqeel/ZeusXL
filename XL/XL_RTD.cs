@@ -11,9 +11,7 @@ using System.Reactive.Linq;
 using ExcelDna.Integration;
 using ExcelDna.Integration.Rtd;
 using CommonTypes;
-using CommonTypes.BrokerUtils;
 using DataSources;
-//using OMS;
 
 
 namespace XL
@@ -27,7 +25,7 @@ namespace XL
 
         public static IMessageBus Ether;
         public static HeartbeatDataSource HeartbeatSource;
-        public static TWSSource DataSource;
+        public static IBSource DataSource;
         //public static TWSOMS OMS;
 
 
@@ -40,7 +38,7 @@ namespace XL
 
             Ether = new Ether(XL.EpochSecs);
             HeartbeatSource = new HeartbeatDataSource(DateTimeOffset.UtcNow, DateTimeOffset.MaxValue, XL.EpochSecs, "Epoch Heartbeat");
-            DataSource = new TWSSource(Ether, IBHostname, IBPort, IBClientId, IBAccountId, false, 86400000);
+            DataSource = new IBSource(Ether, IBHostname, IBPort, IBClientId, IBAccountId, false, 86400000);
             //OMS = new TWSOMS(Ether, IBHostname, IBPort, IBClientId + 1);
 
             dynamic excel = ExcelDnaUtil.Application;
@@ -48,7 +46,7 @@ namespace XL
         }
 
 
-        [ExcelFunction(Category = "XL_RTD", Description = "Returns a Contract's current market by RTD")]
+        [ExcelFunction(Category = "ZeusXL_RTD", Description = "Returns a Contract's current market by RTD")]
         public static object GetMarket(string Contract, string TickType)
         {
             try
@@ -77,7 +75,7 @@ namespace XL
         }
 
 
-        [ExcelFunction(Category = "XL_RTD", Description = "Demo function that returns current time via RTD")]
+        [ExcelFunction(Category = "ZeusXL_RTD", Description = "Demo function that returns current time via RTD")]
         public static object RTDDemo()
         {
             return XlCall.RTD("XL.TimeServer", null, "NOW");

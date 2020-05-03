@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using CommonTypes.Maths;
 using Accord.Math;
@@ -76,7 +74,7 @@ namespace CommonTypes.PortfolioAllocation
             double min = double.MaxValue, max = double.MinValue;
             for (int i = 0; i < NumAssets - (CashIsRiskLess ? 1 : 0); ++i)
             {
-                double a = weights.ElementwiseMultiply(Vols).InnerProduct(Cholesky.Column(i));
+                double a = Matrix.ElementwiseMultiply(weights, Vols).InnerProduct(Cholesky.Column(i));
 
                 if (a > max)
                     max = a;

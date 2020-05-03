@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Diagnostics;
 
 using ExcelDna.Integration;
 using Accord.Statistics.Models.Regression.Linear;
-using Accord.Statistics.Distributions.Fitting;
 using Accord.Statistics.Distributions.Univariate;
-using QLNet;
+using ql = QLNet;
 using CommonTypes;
 using CommonTypes.Maths;
 using RDotNet;
-
+using DataSources;
 
 namespace XL
 {
@@ -67,7 +63,7 @@ namespace XL
         public static object TestCalendars(string CalendarName, DateTime StartDate, DateTime EndDate)
         {
             Type tt = CommonTypes.Utils.FindType(CalendarName, null);
-            Calendar cal = (Calendar)Activator.CreateInstance(tt);
+            ql.Calendar cal = (ql.Calendar)Activator.CreateInstance(tt);
 
             int nDays = (int)(EndDate - StartDate).TotalDays;
             object[,] ret = new object[nDays, 2];
@@ -75,7 +71,7 @@ namespace XL
             for (int i = 0; i < nDays; ++i) {
                 DateTime date = StartDate.AddDays(i);
                 ret[i, 0] = date.ToOADate();
-                ret[i, 1] = cal.isHoliday(new Date(date));
+                ret[i, 1] = cal.isHoliday(new ql.Date(date));
             }
 
             return ret;
@@ -305,7 +301,7 @@ namespace XL
         {
             int nPaths = Utils.GetOptionalParameter(nPathsOpt, 1);
 
-            double r = 0.0;
+            double r = 0.01;
 
             double[] spots = new double[nAssets];
             double[] q = new double[nAssets];
@@ -371,6 +367,33 @@ namespace XL
             var result = engine.Evaluate(expression);
 
             return result.AsNumericMatrix().ToArray();
+        }
+
+
+        [ExcelFunction(Category = "ZeusXL", Description = "Test IB Api")]
+        public static object TestGetStockPrices(string ticker)
+        {
+            Contract cc = new Contract(1, ticker, "STK", "SMART", "USD", "", 100, "", 0, "", "", "", "", new PositiveInteger(1));
+
+            Ether privateEther = new Ether(60);
+            IBSource tws = new IBSource(privateEther, "127.0.0.1", 7496, 1, "DU74885", false, 60);
+            tws.Connect();
+
+            tws.Subscribe(cc);
+
+            double[] ret = new double[6];
+            privateEther.AsObservable<Market>().Subscribe(m =>
+            {
+                ret[0] = m.BidSize;
+                ret[1] = (double)m.Bid;
+                ret[2] = (double)m.Mid;
+                ret[3] = (double)m.Ask;
+                ret[4] = m.AskSize;
+            });
+
+            return ret;
+
+            tws.Unsubscribe(cc);
         }
 
     }

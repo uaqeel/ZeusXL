@@ -306,7 +306,7 @@ namespace XL
             double[,] ret = new double[nDates, nAssets];
             for (int i = 0; i < nAssets; ++i)
             {
-                double[] temp = BasicAnalytics.GetReturns((reverse ? data.Column(i).Reverse().ToArray() : data.Column(i)), numDaysReturns, useBPReturns);
+                double[] temp = BasicAnalytics.CalculateReturns((reverse ? data.Column(i).Reverse().ToArray() : data.Column(i)), numDaysReturns, useBPReturns);
                 if (reverse)
                     temp = temp.Reverse().ToArray();
 
@@ -351,7 +351,7 @@ namespace XL
             double[,] returns = new double[nDates, nAssets];
             for (int i = 0; i < nAssets; ++i)
             {
-                double[] ret = BasicAnalytics.GetReturns(prices.Column(i), numDaysReturns, false);
+                double[] ret = BasicAnalytics.CalculateReturns(prices.Column(i), numDaysReturns, false);
                 for (int j = 0; j < nDates; ++j)
                 {
                     returns[j, i] = ret[j];
@@ -470,7 +470,7 @@ namespace XL
             double[] combinedData = new double[nDates];
             for (int i = 0; i < nAssets; ++i)
             {
-                double[] temp = BasicAnalytics.GetReturns((reversed ? data.Column(i).Reverse().ToArray() : data.Column(i)), 1, false);
+                double[] temp = BasicAnalytics.CalculateReturns((reversed ? data.Column(i).Reverse().ToArray() : data.Column(i)), 1, false);
 
                 for (int j = 0; j < nDates; ++j)
                 {

@@ -143,6 +143,7 @@ namespace XL
         // Required by ExcelDna.
         public void AutoOpen()
         {
+            SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
         }
 
 

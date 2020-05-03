@@ -6,19 +6,18 @@ using System.IO;
 using System.Diagnostics;
 
 using ExcelDna.Integration;
-using Accord.MachineLearning;
+using aml = Accord.MachineLearning;
 using Accord.Math;
 using Accord.Statistics;
 using Accord.Statistics.Analysis;
-using AForge.Math;
+using af = AForge.Math;
 using MathNet.Numerics.LinearAlgebra.Double;
 using MathNet.Numerics.LinearAlgebra.Generic;
 using MathNet.Numerics.Interpolation.Algorithms;
 using CommonTypes;
 using CommonTypes.Maths;
 using CommonTypes.PortfolioAllocation;
-using Strategies;
-
+using Accord.MachineLearning;
 
 namespace XL
 {
@@ -98,15 +97,15 @@ namespace XL
         public static object FFT(double[] Data, object BackwardFlagOpt)
         {
             bool backwards = Utils.GetOptionalParameter(BackwardFlagOpt, false);
-            FourierTransform.Direction direction = (backwards ? FourierTransform.Direction.Backward : FourierTransform.Direction.Forward);
+            af.FourierTransform.Direction direction = (backwards ? af.FourierTransform.Direction.Backward : af.FourierTransform.Direction.Forward);
 
-            Complex[] cData = new Complex[Data.Length];
+            af.Complex[] cData = new af.Complex[Data.Length];
             for (int i = 0; i < Data.Length; ++i)
-                cData[i] = new Complex(Data[i], 0);
+                cData[i] = new af.Complex(Data[i], 0);
 
             try
             {
-                FourierTransform.FFT(cData, direction);
+                af.FourierTransform.FFT(cData, direction);
             }
             catch (Exception e)
             {
@@ -164,17 +163,19 @@ namespace XL
 
             // Unfortunately, you can't set the initial cluster centers manually here, which
             // means that every time this function is called, it will return different clusters.
-            KMeans km = new KMeans(NumClusters);
-            int[] labels = km.Compute(data);
+            aml.KMeans km = new aml.KMeans(NumClusters);
+            aml.KMeansClusterCollection kcc = km.Learn(data);
 
-            int nClusters = km.Clusters.Count;
+            int nClusters = kcc.Count;
             double[,] ret = new double[nClusters, nCols];
+
+            // TODO - 19Apr20 - needs testing, this used to previously put the mean[c] into ret[x,c]?
             int x = 0;
-            foreach (KMeansCluster kmc in km.Clusters.OrderBy(c => c.Mean[0]))
+            foreach (KMeansClusterCollection.KMeansCluster cc in kcc.Clusters.OrderBy(xx => xx.Centroid.Mean()))
             {
                 for (int c = 0; c < nCols; ++c)
                 {
-                    ret[x, c] = kmc.Mean[c];
+                    ret[x, c] = cc.Centroid.Mean();
                 }
 
                 x++;
@@ -414,7 +415,7 @@ namespace XL
             int index2 = Utils.GetOptionalParameter(Index2Opt, -1);
 
             double[,] data = Utils.GetMatrix<double>(Data);
-            var corrs = Accord.Statistics.Tools.Correlation(data);
+            var corrs = Accord.Statistics.Measures.Correlation(data);
 
             if (index1 > -1 && index2 > -1)
                 return corrs[index1, index2];
@@ -911,7 +912,7 @@ namespace XL
         {
             int nRows = Data.GetLength(0), nCols = Data.GetLength(1);
             double[,] data = (double[,])Data.Clone();
-            double[,] CorrelationMatrix = Accord.Statistics.Tools.Correlation(data);
+            double[,] CorrelationMatrix = Accord.Statistics.Measures.Correlation(data);
 
             Accord.Math.Decompositions.EigenvalueDecomposition evd = new Accord.Math.Decompositions.EigenvalueDecomposition(CorrelationMatrix);
             double[,] values = evd.DiagonalMatrix;

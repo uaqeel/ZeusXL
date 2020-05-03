@@ -197,6 +197,7 @@ namespace XL
         }
 
 
+        [ExcelFunction(IsHidden = true)]
         public static DateTime GetDate(object Date, DateTime defaultValue)
         {
             DateTime temp;
@@ -228,9 +229,10 @@ namespace XL
         }
     }
 
-    public class BasicAnalytics
+    public static class BasicAnalytics
     {
-        public static double[] GetReturns(double[] data, int numDaysReturns, bool useBPReturns)
+        [ExcelFunction(IsHidden = true)]
+        public static double[] CalculateReturns(double[] data, int numDaysReturns, bool useBPReturns)
         {
             double[] ret = new double[data.Length];
             for (int i = numDaysReturns; i < data.Length; ++i)
@@ -243,10 +245,11 @@ namespace XL
 
 
         // This returns the version of the Sharpe with the compounding to match CM2.
+        [ExcelFunction(IsHidden = true)]
         public static double[] GetSharpe(double[] prices, int numDaysReturns, bool useBPReturns, int SharpeWindow,
                                          int annualisationFactor, bool returnZScore, int ZWindow, bool exponentialSharpe)
         {
-            double[] ret = GetReturns(prices, numDaysReturns, useBPReturns);
+            double[] ret = CalculateReturns(prices, numDaysReturns, useBPReturns);
             int nRet = prices.Length;
 
             CircularBuffer<double> returns = new CircularBuffer<double>(SharpeWindow);

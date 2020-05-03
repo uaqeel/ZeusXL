@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,8 +10,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CommonTypes</RootNamespace>
     <AssemblyName>CommonTypes</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,14 +34,20 @@
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accord.Math">
-      <HintPath>..\Lib\Accord.NET\Accord.Math.dll</HintPath>
+    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.3.8.0\lib\net45\Accord.dll</HintPath>
     </Reference>
-    <Reference Include="CSharpAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\IB-Api.Official\CSharpAPI.dll</HintPath>
+    <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net45\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net45\Accord.Math.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CSharpAPI">
+      <HintPath>..\Lib\TWSAPI-976.01\CSharpAPI.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Iridium">
       <HintPath>..\Lib\Math.Net\MathNet.Iridium.dll</HintPath>
@@ -49,11 +59,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\ProtoBuf\protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="QLNet">
-      <HintPath>..\Lib\QLNet\QLNet.dll</HintPath>
+    <Reference Include="QLNet, Version=1.11.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QLNet.1.11.3\lib\net452\QLNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Reactive">
       <HintPath>..\Lib\RX\System.Reactive.dll</HintPath>
     </Reference>
@@ -67,13 +78,77 @@
   <ItemGroup>
     <Compile Include="Bars.cs" />
     <Compile Include="BasicTypes.cs" />
-    <Compile Include="BrokerUtils\IBClient.cs" />
-    <Compile Include="BrokerUtils\IBUtils.cs" />
     <Compile Include="Containers\Containers.cs" />
     <Compile Include="Containers\ContainerUtils.cs" />
     <Compile Include="Containers\SummaryContainer.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="DataTypes.cs" />
+    <Compile Include="IBApi\IBClient.cs" />
+    <Compile Include="IBApi\IBUtils.cs" />
+    <Compile Include="IBApi\messages\AccountDownloadEndMessage.cs" />
+    <Compile Include="IBApi\messages\AccountSummaryEndMessage.cs" />
+    <Compile Include="IBApi\messages\AccountSummaryMessage.cs" />
+    <Compile Include="IBApi\messages\AccountUpdateMultiEndMessage.cs" />
+    <Compile Include="IBApi\messages\AccountUpdateMultiMessage.cs" />
+    <Compile Include="IBApi\messages\AccountValueMessage.cs" />
+    <Compile Include="IBApi\messages\AdvisorDataMessage.cs" />
+    <Compile Include="IBApi\messages\BondContractDetailsMessage.cs" />
+    <Compile Include="IBApi\messages\CommissionMessage.cs" />
+    <Compile Include="IBApi\messages\CompletedOrderMessage.cs" />
+    <Compile Include="IBApi\messages\ConnectionStatusMessage.cs" />
+    <Compile Include="IBApi\messages\ContractDetailsEndMessage.cs" />
+    <Compile Include="IBApi\messages\ContractDetailsMessage.cs" />
+    <Compile Include="IBApi\messages\DailyPnLMessage.cs" />
+    <Compile Include="IBApi\messages\DailyPnLSingleMessage.cs" />
+    <Compile Include="IBApi\messages\DeepBookMessage.cs" />
+    <Compile Include="IBApi\messages\ErrorMessage.cs" />
+    <Compile Include="IBApi\messages\ExecutionMessage.cs" />
+    <Compile Include="IBApi\messages\FamilyCodesMessage.cs" />
+    <Compile Include="IBApi\messages\FundamentalsMessage.cs" />
+    <Compile Include="IBApi\messages\HeadTimestampMessage.cs" />
+    <Compile Include="IBApi\messages\HistogramDataMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalDataEndMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalDataMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalNewsEndMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalNewsMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalTickBidAskEndMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalTickBidAskMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalTickEndMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalTickLastEndMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalTickLastMessage.cs" />
+    <Compile Include="IBApi\messages\HistoricalTickMessage.cs" />
+    <Compile Include="IBApi\messages\ManagedAccountsMessage.cs" />
+    <Compile Include="IBApi\messages\MarketDataMessage.cs" />
+    <Compile Include="IBApi\messages\MarketDataTypeMessage.cs" />
+    <Compile Include="IBApi\messages\MarketRuleMessage.cs" />
+    <Compile Include="IBApi\messages\MktDepthExchangesMessage.cs" />
+    <Compile Include="IBApi\messages\NewsArticleMessage.cs" />
+    <Compile Include="IBApi\messages\NewsProvidersMessage.cs" />
+    <Compile Include="IBApi\messages\OpenOrderMessage.cs" />
+    <Compile Include="IBApi\messages\OrderBoundMessage.cs" />
+    <Compile Include="IBApi\messages\OrderMessage.cs" />
+    <Compile Include="IBApi\messages\OrderStatusMessage.cs" />
+    <Compile Include="IBApi\messages\PositionMessage.cs" />
+    <Compile Include="IBApi\messages\PositionMultiEndMessage.cs" />
+    <Compile Include="IBApi\messages\PositionMultiMessage.cs" />
+    <Compile Include="IBApi\messages\RealTimeBarMessage.cs" />
+    <Compile Include="IBApi\messages\ScannerEndMessage.cs" />
+    <Compile Include="IBApi\messages\ScannerMessage.cs" />
+    <Compile Include="IBApi\messages\ScannerParametersMessage.cs" />
+    <Compile Include="IBApi\messages\SecurityDefinitionOptionParameterEndMessage.cs" />
+    <Compile Include="IBApi\messages\SecurityDefinitionOptionParameterMessage.cs" />
+    <Compile Include="IBApi\messages\SoftDollarTiersMessage.cs" />
+    <Compile Include="IBApi\messages\SymbolSamplesMessage.cs" />
+    <Compile Include="IBApi\messages\TickByTickAllLastMessage.cs" />
+    <Compile Include="IBApi\messages\TickByTickBidAskMessage.cs" />
+    <Compile Include="IBApi\messages\TickByTickMidPointMessage.cs" />
+    <Compile Include="IBApi\messages\TickNewsMessage.cs" />
+    <Compile Include="IBApi\messages\TickOptionMessage.cs" />
+    <Compile Include="IBApi\messages\TickPriceMessage.cs" />
+    <Compile Include="IBApi\messages\TickReqParamsMessage.cs" />
+    <Compile Include="IBApi\messages\TickSizeMessage.cs" />
+    <Compile Include="IBApi\messages\UpdateAccountTimeMessage.cs" />
+    <Compile Include="IBApi\messages\UpdatePortfolioMessage.cs" />
     <Compile Include="Indicators\Indicator.cs" />
     <Compile Include="Indicators\KalmanSmoother.cs" />
     <Compile Include="Indicators\MovingAverages.cs" />
@@ -109,8 +184,20 @@
     <Compile Include="Utils.cs" />
     <Compile Include="VarBars.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="IBApi\Notes.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

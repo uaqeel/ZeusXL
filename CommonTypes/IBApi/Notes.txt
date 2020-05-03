@@ -1,0 +1,18 @@
+﻿- In the IBSampleApp solution:
+	1) Go to IBClient and change the namespace to "CommonTypes"
+	2) Go to any file in messages and change the namespace to "CommonTypes.Messages" 
+	3) Now copy IBClient.cs to CommonTypes/IBApi
+	4) Now copy IBSampleApp/messages into CommonTypes/IBApi
+	5) Drag messages folder into the Zeus solution under CommonTypes/IBApi
+	6) In IBClient.cs, comment out the reference to System.Windows.Forms
+	7) In IBClient.cs, change the reference to IBSampleApp.messages to just Messages
+	8) ctrl+shift+h on IBClient.cs and change "Contract" to "IBApi.Contract" (match whole word, match case)
+	9) ctrl+shift+h on IBClient.cs and change "Bar" to "IBApi.Bar" (match whole word, match case)
+	10) ctrl+shift+h on IBClient.cs and change "Order" to "IBApi.Order" (match whole word, match case)
+	11) ctrl+shift+h on the Messages folder and change "Contract" to "IBApi.Contract" (match whole word, match case)
+	12) ctrl+shift+h on the Messages folder and change "Order" to "IBApi.Order" (match whole word, match case)
+	13) ctrl+shift+h on the Messages folder and change "Bar" to "IBApi.Bar" (match whole word, match case)
+	14) for some reason TickReqParamsMessage.cs is in the IBSampleApp/ui folder - copy it over to CommonTypes/IBApi and add it to the solution
+
+- Now some manual cleanup required in the messages folder where the ctrl+shift+h was a bit too aggressive - accessors with wrong names etc
+- Now change accessors for imported code to public

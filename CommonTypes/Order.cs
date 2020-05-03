@@ -39,15 +39,15 @@ namespace CommonTypes
             }
         }
 
-        new public Action Action
+        new public TradeAction Action
         {
             get
             {
-                return (Action)Enum.Parse(typeof(Action), base.Action);
+                return (TradeAction)Enum.Parse(typeof(TradeAction), base.Action);
             }
             set
             {
-                base.Action = Enum.GetName(typeof(Action), value);
+                base.Action = Enum.GetName(typeof(TradeAction), value);
             }
         }
 
@@ -79,7 +79,7 @@ namespace CommonTypes
         public string Comment;                                  // This is a purely optional field.
 
 
-        public Order(DateTimeOffset timestamp, int contractId, int strategyId, Action action, PositiveInteger quantity,
+        public Order(DateTimeOffset timestamp, int contractId, int strategyId, TradeAction action, PositiveInteger quantity,
                      OrderType orderType, TimeInForce timeInForce, decimal desiredPrice)
         {
             // Orders are assigned an Id by the OMS, so until then, they have Id == -1.
@@ -132,7 +132,7 @@ namespace CommonTypes
         /// <returns></returns>
         public virtual void Merge(Order theoriginal)
         {
-            if (theoriginal != null && theoriginal.Action != Action.Wait)
+            if (theoriginal != null && theoriginal.Action != TradeAction.Wait)
             {
                 if (ContractId != theoriginal.ContractId)
                     throw new Exception("Error, can't merge orders if they're on different contracts!");
@@ -148,11 +148,11 @@ namespace CommonTypes
 
                 int stopLossQuantity = (theoriginal.TotalQuantity.Value * (int)theoriginal.Action) + (TotalQuantity.Value * (int)Action);
                 TotalQuantity = (PositiveInteger)stopLossQuantity;
-                Action = (Action)Math.Sign(stopLossQuantity);
+                Action = (TradeAction)Math.Sign(stopLossQuantity);
                 
                 // Example: buy 5 (stop: sell 5) THEN sell 1 (stop: buy 1) = long 4 (stop: sell 4). On the other hand,
                 // buy 1 (stop: sell 1) THEN sell 1 (stop: buy 1) = long 0 (stop: null).
-                if (Action == Action.Wait)
+                if (Action == TradeAction.Wait)
                     return;
 
                 if (theoriginal.Action != Action)
@@ -179,7 +179,7 @@ namespace CommonTypes
 
 
         // Quantity is absolute.
-        public static Order MarketOrder(DateTimeOffset Timestamp, Action Action, int ContractId, int StrategyId, PositiveInteger Quantity, decimal DesiredPrice)
+        public static Order MarketOrder(DateTimeOffset Timestamp, TradeAction Action, int ContractId, int StrategyId, PositiveInteger Quantity, decimal DesiredPrice)
         {
             Order o = new Order(Timestamp, ContractId, StrategyId, Action, Quantity, OrderType.Market, TimeInForce.Day, DesiredPrice);
 
@@ -187,17 +187,17 @@ namespace CommonTypes
         }
 
 
-        public static Order MarketOrder(Market CurrentMarket, Action Action, int StrategyId, PositiveInteger Quantity)
+        public static Order MarketOrder(Market CurrentMarket, TradeAction Action, int StrategyId, PositiveInteger Quantity)
         {
             return MarketOrder(CurrentMarket.Timestamp, Action, CurrentMarket.ContractId, StrategyId, Quantity,
-                               (Action == CommonTypes.Action.Buy ? CurrentMarket.Ask : CurrentMarket.Bid));
+                               (Action == CommonTypes.TradeAction.Buy ? CurrentMarket.Ask : CurrentMarket.Bid));
         }
 
 
-        public static Tuple<Order, StopLossOrder, TakeProfitOrder> OrderTriple(Market CurrentMarket, Action Action, int ContractId, int StrategyId, PositiveInteger Quantity,
+        public static Tuple<Order, StopLossOrder, TakeProfitOrder> OrderTriple(Market CurrentMarket, TradeAction Action, int ContractId, int StrategyId, PositiveInteger Quantity,
                                                      decimal TakeProfit, decimal StopLoss, bool TrailingStopLoss)
         {
-            decimal desiredPrice = (Action == Action.Buy ? CurrentMarket.Ask : CurrentMarket.Bid);
+            decimal desiredPrice = (Action == TradeAction.Buy ? CurrentMarket.Ask : CurrentMarket.Bid);
             Order entry = MarketOrder(CurrentMarket.Timestamp, Action, ContractId, StrategyId, Quantity, desiredPrice);
             StopLossOrder stoploss = new StopLossOrder(entry, StopLoss, TrailingStopLoss);
             TakeProfitOrder takeprofit = new TakeProfitOrder(entry, TakeProfit);
@@ -247,7 +247,7 @@ namespace CommonTypes
                 if (EntryOrder.GetType() == typeof(TakeProfitOrder))
                     Action = EntryOrder.Action;                                                 // EntryOrder is actually a take-profit that we're converting to a trailing stop-loss.
                 else
-                    Action = (Action)(-(int)EntryOrder.Action);                                 // EntryOrder is an actual entry order that we need a matching stop-loss for.
+                    Action = (TradeAction)(-(int)EntryOrder.Action);                                 // EntryOrder is an actual entry order that we need a matching stop-loss for.
 
                 DesiredPrice = (int)Action * StopLoss + EntryOrder.DesiredPrice;
             }
@@ -260,7 +260,7 @@ namespace CommonTypes
 
         public bool Test(Market CurrentMarket)
         {
-            decimal executablePrice = (Action == Action.Buy ? CurrentMarket.Ask : CurrentMarket.Bid);
+            decimal executablePrice = (Action == TradeAction.Buy ? CurrentMarket.Ask : CurrentMarket.Bid);
 
             // We want to buy, action == 1, do it if executablePrice > stopprice
             // We want to sell, action == -1, do it if executablePrice < stopprice
@@ -282,7 +282,7 @@ namespace CommonTypes
         {
             if (TrailFlag)
             {
-                decimal executablePrice = (Action == Action.Buy ? CurrentMarket.Ask : CurrentMarket.Bid);
+                decimal executablePrice = (Action == TradeAction.Buy ? CurrentMarket.Ask : CurrentMarket.Bid);
                 decimal possibleUpdatePrice = executablePrice + (int)Action * StopLoss;
 
                 if (possibleUpdatePrice != DesiredPrice &&
@@ -299,7 +299,7 @@ namespace CommonTypes
 
         public override void Merge(Order theoriginal)
         {
-            if (theoriginal != null && theoriginal.Action != Action.Wait)
+            if (theoriginal != null && theoriginal.Action != TradeAction.Wait)
             {
                 if (ContractId != theoriginal.ContractId)
                     throw new Exception("Error, can't merge orders if they're on different contracts!");
@@ -314,11 +314,11 @@ namespace CommonTypes
                     throw new Exception("Error, order merging currently only available for Market orders!");
 
                 int stopLossQuantity = (theoriginal.TotalQuantity.Value * (int)theoriginal.Action) + (TotalQuantity.Value * (int)Action);
-                Action = (Action)Math.Sign(stopLossQuantity);
+                Action = (TradeAction)Math.Sign(stopLossQuantity);
 
                 // Example: buy 5 (stop: sell 5) THEN sell 1 (stop: buy 1) = long 4 (stop: sell 4). On the other hand,
                 // buy 1 (stop: sell 1) THEN sell 1 (stop: buy 1) = long 0 (stop: null).
-                if (Action == Action.Wait)
+                if (Action == TradeAction.Wait)
                     return;
 
                 if (theoriginal.Action != Action)
@@ -339,9 +339,9 @@ namespace CommonTypes
                     //     0.5 * (theoriginal.TotalQuantity + thenewone.TotalQuantity) * (theoriginal.DesiredPrice - thenewone.DesiredPrice)
                     //DesiredPrice = (theoriginal.TotalQuantity.Value * theoriginal.DesiredPrice + TotalQuantity.Value * DesiredPrice) /
                     //                (theoriginal.TotalQuantity + TotalQuantity).Value;
-                    if (Action == CommonTypes.Action.Sell)
+                    if (Action == CommonTypes.TradeAction.Sell)
                         DesiredPrice = Math.Max(theoriginal.DesiredPrice, DesiredPrice + StopLoss - StopLoss / ((decimal)Math.Abs(stopLossQuantity) / TotalQuantity.Value));
-                    else if (Action == CommonTypes.Action.Buy)
+                    else if (Action == CommonTypes.TradeAction.Buy)
                         DesiredPrice = Math.Min(theoriginal.DesiredPrice, DesiredPrice - StopLoss + StopLoss / ((decimal)Math.Abs(stopLossQuantity) / TotalQuantity.Value));
                 }
 
@@ -368,7 +368,7 @@ namespace CommonTypes
 
             if (EntryOrder != null)
             {
-                Action = (Action)(-(int)EntryOrder.Action);
+                Action = (TradeAction)(-(int)EntryOrder.Action);
 
                 decimal entryPrice = EntryOrder.DesiredPrice;
                 DesiredPrice = (int)EntryOrder.Action * TakeProfit + entryPrice;
@@ -382,7 +382,7 @@ namespace CommonTypes
 
         public bool Test(Market CurrentMarket)
         {
-            decimal executablePrice = (Action == Action.Buy ? CurrentMarket.Ask : CurrentMarket.Bid);
+            decimal executablePrice = (Action == TradeAction.Buy ? CurrentMarket.Ask : CurrentMarket.Bid);
 
             if (Purpose == Purpose.TakeProfit)
             {
@@ -427,7 +427,7 @@ namespace CommonTypes
     }
 
 
-    public enum Action : int
+    public enum TradeAction : int
     {
         Buy = +1,
         Sell = -1,

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Diagnostics;
 
 using ExcelDna.Integration;
 using Accord.MachineLearning;
 using CommonTypes;
-using Strategies;
 using CommonTypes.Maths;
 
 
@@ -161,24 +158,25 @@ namespace XL
             }
 
             KMeans km = new KMeans(numClusters);
-            int[] labels = km.Compute(data);
+            KMeansClusterCollection kcc = km.Learn(data);
 
             // Calculate the averages and stdevs of the cluster scores.
             SummaryContainer[] summaries = new SummaryContainer[numClusters];
-            for (int i = 0; i < labels.Length; ++i)
+            for (int i = 0; i < kcc.Count; ++i)
             {
-                if (summaries[labels[i]] == null)
-                    summaries[labels[i]] = new SummaryContainer();
+                if (summaries[i] == null)
+                    summaries[i] = new SummaryContainer();
 
-                summaries[labels[i]].Add(Scores[i]);
+                summaries[i].Add(Scores[i]);
             }
 
+            // TODO - 19Apr20 - Changed this from old version of Accord, not sure if it's right. Needs testing.
             double[,] ret = new double[numClusters, nCols + 6];
             for (int r = 0; r < numClusters; ++r)
             {
                 for (int c = 0; c < nCols; ++c)
                 {
-                    ret[r, c] = km.Clusters[r].Mean[c];
+                    ret[r, c] = kcc[r].Centroid[c];
                 }
 
                 ret[r, nCols] = summaries[r].Count;

@@ -9,45 +9,109 @@ using System.Reflection;
 using System.Diagnostics;
 
 using IB = IBApi;
-
+using Accord;
 
 namespace CommonTypes
 {
     [DataContract]
-    public class Contract : IB.Contract, IIdentifiable {
+    public class Contract : IIdentifiable {
+        public IB.Contract IBContract { get; private set; }
         public int Id { get; private set; }
 
         public string Type
         {
             get
             {
-                return SecType;
+                return IBContract.SecType;
             }
             set
             {
-                SecType = value;
+                IBContract.SecType = value;
             }
         }
 
-        new public int Multiplier
+        public string Symbol
         {
-            get
-            {
-                return int.Parse(base.Multiplier);
+            get { return IBContract.Symbol; }
+            set { IBContract.Symbol = value; }
+        }
+
+        public string Exchange
+        {
+            get { return IBContract.Exchange; }
+            set { IBContract.Exchange = value; }
+        }
+
+        public string PrimaryExchange
+        {
+            get { return IBContract.PrimaryExch; }
+            set { IBContract.PrimaryExch = value; }
+        }
+
+        public string Currency
+        {
+            get { return IBContract.Currency; }
+            set { IBContract.Currency = value; }
+        }
+
+        private int multiplier;
+        public int Multiplier
+        {
+            get { return multiplier; }
+            set { multiplier = value;
+                  IBContract.Multiplier = (multiplier == 0 ? "" : multiplier.ToString());
             }
+        }
+
+        public string LastTradeDateOrContractMonth
+        {
+            get { return IBContract.LastTradeDateOrContractMonth; }
+            set { IBContract.LastTradeDateOrContractMonth = value; }
+        }
+
+        public double Strike
+        {
+            get { return IBContract.Strike; }
+            set { IBContract.Strike = value; }
+        }
+
+        public string Right
+        {
+            get { return IBContract.Right; }
+            set { IBContract.Right = value; }
+        }
+
+        public string SecId
+        {
+            get { return IBContract.SecId; }
+            set { IBContract.SecId = value; }
+        }
+
+        public string SecIdType
+        {
+            get { return IBContract.SecIdType; }
+            set { IBContract.SecIdType = value; }
+        }
+
+        public string TradingClass
+        {
+            get { return IBContract.TradingClass; }
+            set { IBContract.TradingClass = value; }
         }
 
         public Contract(int id, string symbol, string type, string exchange, string currency, string primaryExchange,
-                        string multiplier, string expiry, decimal strike, string right, string secIdType, string secId, string tradingClass, PositiveInteger lotSize)
+                        int multiplier, string expiry, decimal strike, string right, string secIdType, string secId, string tradingClass, PositiveInteger lotSize)
         {
+            IBContract = new IB.Contract();
+
             Id = id;
             Symbol = symbol;
             Type = type;
             Exchange = exchange;
-            PrimaryExch = primaryExchange;
+            PrimaryExchange = primaryExchange;
             Currency = currency;
-            base.Multiplier = multiplier;
-            Expiry = expiry;
+            Multiplier = multiplier;
+            LastTradeDateOrContractMonth = expiry;
 
             Strike = (double)strike;
             Right = right;
@@ -65,10 +129,10 @@ namespace CommonTypes
             Symbol = c.Symbol;
             Type = c.Type;
             Exchange = c.Exchange;
-            PrimaryExch = c.PrimaryExch;
+            PrimaryExchange = c.PrimaryExchange;
             Currency = c.Currency;
-            base.Multiplier = c.Multiplier.ToString();
-            Expiry = c.Expiry;
+            Multiplier = c.Multiplier;
+            LastTradeDateOrContractMonth = c.LastTradeDateOrContractMonth;
             Strike = c.Strike;
             Right = c.Right;
 
@@ -90,10 +154,10 @@ namespace CommonTypes
             Symbol = c.Symbol;
             Type = c.Type;
             Exchange = c.Exchange;
-            PrimaryExch = c.PrimaryExch;
+            PrimaryExchange = c.PrimaryExchange;
             Currency = c.Currency;
-            base.Multiplier = c.Multiplier.ToString();
-            Expiry = c.Expiry;
+            Multiplier = c.Multiplier;
+            LastTradeDateOrContractMonth = c.LastTradeDateOrContractMonth;
             Strike = c.Strike;
             Right = c.Right;
             SecIdType = c.SecIdType;
@@ -133,14 +197,14 @@ namespace CommonTypes
             else if (p_other == null)
                 return false;
 
-            IBApi.Contract other = (IBApi.Contract)p_other;
+            Contract other = (Contract)p_other;
 
             if (other.Symbol != Symbol ||
                 other.Exchange != Exchange ||
                 other.Currency != Currency ||
-                other.Multiplier != base.Multiplier ||
-                other.SecType != SecType ||
-                other.Expiry != Expiry ||
+                other.Multiplier != Multiplier ||
+                other.Type != Type ||
+                other.LastTradeDateOrContractMonth != LastTradeDateOrContractMonth ||
                 other.Right != Right ||
                 other.Strike != Strike ||
                 other.TradingClass != TradingClass)

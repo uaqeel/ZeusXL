@@ -13,11 +13,12 @@ namespace XL
     partial class XL
     {
         [ExcelFunction(Category = "ZeusXL", Description = "Create a contract")]
-        public static object CreateContract(string Symbol, string Type, string Exchange, string Currency, string LotSize, string PrimaryExchangeOpt,
+        public static object CreateContract(string Symbol, string Type, string Exchange, string Currency, string LotSizeOpt, string PrimaryExchangeOpt,
                                             string MultiplierOpt, string ExpiryOpt, string RightOpt, string StrikeOpt, string SecIdTypeOpt, string SecIdOpt, string TradingClassOpt)
         {
-            decimal strike = (StrikeOpt == "" ? -1 : decimal.Parse(StrikeOpt));
-            int lotSize = int.Parse(LotSize);
+            decimal strike = (StrikeOpt == "" ? 0 : decimal.Parse(StrikeOpt));
+            int multiplier = (MultiplierOpt== "" ? 0 : int.Parse(MultiplierOpt));
+            int lotSize = (LotSizeOpt == "" ? 1 : int.Parse(LotSizeOpt));
             if (Math.Sign(lotSize) != 1)
                 throw new Exception(string.Format("Error, contract lot size must be positive! ({0})", lotSize));
 
@@ -25,7 +26,7 @@ namespace XL
             int contractId = contracts.Count() + 1;
 
             Contract c = new Contract(contractId, Symbol, Type, Exchange, Currency,
-                                      PrimaryExchangeOpt, MultiplierOpt, ExpiryOpt, strike,
+                                      PrimaryExchangeOpt, multiplier, ExpiryOpt, strike,
                                       RightOpt, SecIdTypeOpt, SecIdOpt, TradingClassOpt, (PositiveInteger)lotSize);
 
             Contract cc = contracts.Where(cs => cs.Value.Equals(c)).SingleOrDefault().Value;

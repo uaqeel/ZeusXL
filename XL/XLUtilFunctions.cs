@@ -376,7 +376,7 @@ namespace XL
     
 	public static class ResizeTestFunctions
 	{
-        public static object MakeArray(int rows, int columns)
+        static object MakeArray(int rows, int columns)
         {
             object[,] result = new string[rows, columns];
             for (int i = 0; i < rows; i++)
@@ -390,7 +390,7 @@ namespace XL
             return result;
         }
 
-        public static object MakeArrayAndResize(int rows, int columns)
+        static object MakeArrayAndResize(int rows, int columns)
         {
             object result = MakeArray(rows, columns);            
             // Call Resize via Excel - so if the Resize add-in is not part of this code, it should still work.

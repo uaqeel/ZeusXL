@@ -1,0 +1,43 @@
+﻿<DnaLibrary RuntimeVersion="v4.0">
+  <CustomUI>
+    <!-- Inside here is the exact RibbonX xml passed to Excel -->
+    <!-- This will only be loaded for Excel 2010 because of the namespace -->
+    <customUI xmlns='http://schemas.microsoft.com/office/2009/01/customui'>
+      <ribbon>
+      </ribbon>
+    </customUI>
+  </CustomUI>
+
+  <CustomUI>
+    <!-- Inside here is the RibbonX xml passed to Excel -->
+    <!-- This can also be loaded by Excel 2007 because of the namespace -->
+    <customUI xmlns='http://schemas.microsoft.com/office/2006/01/customui' loadImage='LoadImage'>
+      <ribbon>
+        <tabs>
+          <tab id='CustomTab' label='Zeus'>
+            <group id='XLGroup' label='XL'>
+              <button id='Button1' label='Tidy Array' imageMso='DatasheetNewField' size='large' onAction='RunTagMacro' tag='TidyArray' />
+              <button id='Button2' label='Calculate Range' imageMso='CalculateNow' size='large' onAction='RunTagMacro' tag='CalculateRange' />
+            </group>
+            <group id='XLOMGroup' label='Zeus Object Store'>  
+              <button id='Button3' label='Show Object List' imageMso='QuerySelectQueryType' size='large' onAction='RunTagMacro' tag='DisplayObjectList' />
+              <button id='Button4' label='Clear Memory' imageMso='Clear' size='large' onAction='RunTagMacro' tag='ClearMemory' />
+              <button id='Button5' label='Clear Memory Recalculate' imageMso='Refresh' size='large' onAction='RunTagMacro' tag='ClearMemoryAndRecalculate' />
+              <button id='Button6' label='Save Objects' imageMso='FileSave' size='large' onAction='RunTagMacro' tag='XLOMSave' />
+              <button id='Button7' label='Load Objects' imageMso='FileOpen' size='large' onAction='RunTagMacro' tag='XLOMLoad' />
+            </group>
+            <group id='XLMathGroup' label='Zeus Eval'>  
+              <button id='Button8' label='Edit Script' imageMso='EquationMatrixGallery' size='large' onAction='RunTagMacro' tag='OpenZEvalScript' />
+            </group>
+            <group id='OtherGroup' label='Other'>
+              <button id='Button9' label='Config' imageMso='Lock' size='large' onAction='RunTagMacro' tag='UpdateIntegrataCreds' />
+              <button id='Button10' label='Show Log' imageMso='MacroDefault' size='large' onAction='RunTagMacro' tag='ShowLog' />
+            </group>
+          </tab>
+        </tabs>
+      </ribbon>
+    </customUI>
+  </CustomUI>
+  
+  <ExternalLibrary Path="XL.dll" />
+</DnaLibrary>

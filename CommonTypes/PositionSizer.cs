@@ -54,12 +54,12 @@ namespace CommonTypes
         }
 
 
-        public Tuple<Action, PositiveInteger> GetQuantityToTrade(Contract contract, Market currentMarket, int currentPosition, Action action)
+        public Tuple<TradeAction, PositiveInteger> GetQuantityToTrade(Contract contract, Market currentMarket, int currentPosition, TradeAction action)
         {
             // Prevent orphaned positions.
             if (Math.Sign(currentPosition) == -(int)action)
             {
-                return new Tuple<Action, PositiveInteger>(action, new PositiveInteger(currentPosition));
+                return new Tuple<TradeAction, PositiveInteger>(action, new PositiveInteger(currentPosition));
             }
 
             return Logic.GetQuantityToTrade(contract, currentMarket, currentPosition, (int)action);
@@ -71,6 +71,6 @@ namespace CommonTypes
     {
         void ProcessPnLInfo(PnLInfo x);
         void ProcessOrderExecution(OrderExecution x);
-        Tuple<Action, PositiveInteger> GetQuantityToTrade(Contract contract, Market currentMarket, int currentPosition, int action);
+        Tuple<TradeAction, PositiveInteger> GetQuantityToTrade(Contract contract, Market currentMarket, int currentPosition, int action);
     }
 }
